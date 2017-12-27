@@ -4,6 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+//connect to MongoDB
+var db = 'mongodb://localhost/exchange_data'
+mongoose.connect(db, {useMongoClient: true});
+console.log('MongoDB connection successful')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
