@@ -3,24 +3,30 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-    state = {latest_prices: []}
+    constructor() {
+        super();
+        this.state = {users:[]};
 
+    }
     componentDidMount() {
         fetch('/kraken')
             .then(res => res.json())
-            .then(latest_prices => this.setState({ latest_prices }));
+            .then(users => this.setState({ users }));
+            //.then(console.log(JSON.stringify(res)));
     }
 
     render() {
         return (
             <div className="App">
-                <h1>Exchange Compare</h1>
-                {this.state.latest_prices.map(latest_prices =>
-                    <div key={latest_prices.id}>{latest_prices}</div>
+                <h1>Exchange Data</h1>
+                {this.state.users.map(user =>
+                    <div key={user.id}>{user.Exchange}</div>
+                    //<div key={user.Exchange}>{user.ETH_price}</div>
                 )}
             </div>
         );
     }
 }
+
 
 export default App;

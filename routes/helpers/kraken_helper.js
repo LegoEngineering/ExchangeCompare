@@ -7,7 +7,7 @@ module.exports.ticker= async (pairs) => {
         body   : qs.stringify(pairs),
     };
     const url      = 'https://api.kraken.com/0/public/Ticker'
-    const { body } = await got(url, options);
+    const { body } = await got(url,options);
     const response = JSON.parse(body);
 
     if(response.error && response.error.length) {
