@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Trade_updateSchema = new Schema({
+        Exchange: "String",
         Date: "String",
         DASH_price: "String",
         ETH_price: "String",
