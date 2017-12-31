@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Trade_update = require('../models/Trade_update.model');
-const kraken = require('./helpers/kraken_helper');
+const kraken = require('../helpers/kraken_helper');
 
 async function apicalls() {
 
