@@ -12,7 +12,9 @@ mongoose.connect(db, {useMongoClient: true});
 console.log('MongoDB connection successful')
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+//var coincap = require('./routes/coincap');
+var kraken = require('./routes/kraken');
+//var poloniex = require('./routes/poloniex');
 
 var app = express();
 
@@ -29,7 +31,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+//app.use('/coincap', coincap);
+app.use('/kraken', kraken);
+//app.use('/poloniex', poloniex);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

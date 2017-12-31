@@ -3,20 +3,20 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-    state = {users: []}
+    state = {latest_prices: []}
 
     componentDidMount() {
-        fetch('/users')
+        fetch('/kraken')
             .then(res => res.json())
-            .then(users => this.setState({ users }));
+            .then(latest_prices => this.setState({ latest_prices }));
     }
 
     render() {
         return (
             <div className="App">
                 <h1>Exchange Compare</h1>
-                {this.state.users.map(user =>
-                    <div key={user.id}>{user.username}</div>
+                {this.state.latest_prices.map(latest_prices =>
+                    <div key={latest_prices.id}>{latest_prices}</div>
                 )}
             </div>
         );
