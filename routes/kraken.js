@@ -28,14 +28,14 @@ async function kraken_call() {
 };
 kraken_call();
 */
-async function coincap_call() {
-    var packet = (await coincap.ticker());
+async function coincap_call(count) {
+    var packet = (await coincap.ticker())
     var coinTrade_update = new Trade_update({
         Exchange: 'Coincap',
+        Index: count,
         DASH_price: packet[8].price_btc,
         ETH_price: packet[2].price_btc,
         LTC_price: packet[5].price_btc
-
     });
     coinTrade_update.save(function(err, Trade_update) {
         if(err) {
@@ -45,12 +45,13 @@ async function coincap_call() {
         }
     });
 };
-coincap_call();
 
-async function poloniex_call() {
+
+async function poloniex_call(count) {
     var packet = (await poloniex.ticker());
     var poloTrade_update = new Trade_update({
         Exchange: 'Poloniex',
+        Index: count,
         DASH_price: packet.BTC_DASH.last,
         ETH_price: packet.BTC_ETH.last,
         LTC_price: packet.BTC_LTC.last
@@ -63,12 +64,22 @@ async function poloniex_call() {
         }
     });
 };
-poloniex_call();
+
+function apicalls(count){
+    coincap_call(count);
+    poloniex_call(count);
+    return 0;
+};
+
+var index = 0;
+
+setInterval(function(){apicalls(++index)},10000);
+
 
 router.get('/', function(req, res) {
     var query = mongoose.model('Trade_update').find({},function(err,Trade_update){
-        console.log(Trade_update);
-        console.log('Trade_update');
+        //console.log(Trade_update);
+        //console.log('Trade_update');
         res.send(Trade_update);
 
     });

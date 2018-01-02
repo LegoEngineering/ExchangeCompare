@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 //connect to MongoDB
-var db = 'mongodb://localhost/exchange_data'
-mongoose.connect(db, {useMongoClient: true});
+var db = 'mongodb://localhost/exchange'
+mongoose.connect(db, {useMongoClient: true})
 console.log('MongoDB connection successful')
 
 var index = require('./routes/index');

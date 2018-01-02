@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var Trade_updateSchema = new Schema({
         Exchange: "String",
-        Date: "String",
+        Index: "Number",
         DASH_price: "String",
         ETH_price: "String",
         LTC_price: "String",
