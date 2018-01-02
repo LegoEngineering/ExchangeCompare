@@ -10,7 +10,7 @@ class App extends Component {
             data:[],
             count: 0
         };
-        this.interval = setInterval(this.updateDate, 10000);
+        this.interval = setInterval(this.updateDate, 7000);
 
     }
     componentDidMount() {
@@ -29,25 +29,33 @@ class App extends Component {
             .then(data => this.setState({data: data, count: this.state.count+1} ))
     }
 
-    render() {
+    helper =(exName) =>{
         const num = this.state.count;
+        return this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === exName).map(data =>
+            <div>{data.Exchange}:
+                <ul>DASH: {data.DASH_price}</ul>
+                <ul>ETH:  {data.ETH_price}</ul>
+                <ul>LTC:  {data.LTC_price}</ul></div>
+        )};
+
+    render() {
+        /*var cake;
+        if (this.state.count>0){
+            cake ='frame'
+        } else{
+            cake = 'no frame'
+        }*/
+
         return (
             <div className="App">
                 <h1>Exchange Data</h1>
                 <h1> {this.state.count} </h1>
-                <h4>Dash Price       ETH Price       LTC Price</h4>
-                {this.state.data.filter(({Index}) => Index === num).map(data =>
-                    <div>{data.Exchange}:
-                        <ul>DASH: {data.DASH_price}</ul>
-                        <ul>ETH:  {data.ETH_price}</ul>
-                        <ul>LTC:  (data.LTC_price}</ul></div>
-                )}
+                <h4>Huey Duey Louie</h4>
+                {this.helper('Poloniex')}
 
             </div>
         );
     }
 }
-//{this.state.data.filter(({Index}) => Index === 5).map(data =>
-  //  <div key={data.Index}>{data.Exchange}: {data.DASH_price} {data.ETH_price} {data.LTC_price}</div>
 
 export default App;
