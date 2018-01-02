@@ -30,11 +30,10 @@ async function kraken_call() {
 
 async function coincap_call(count) {
     var packet = (await coincap.ticker())
-    console.log(packet);
     var coinTrade_update = new Trade_update({
         Exchange: 'Coincap',
         Index: count,
-        DASH_price: packet[10].price_btc,
+        DASH_price: packet[9].price_btc,
         ETH_price: packet[2].price_btc,
         LTC_price: packet[5].price_btc
     });

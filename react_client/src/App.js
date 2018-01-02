@@ -40,7 +40,7 @@ class App extends Component {
                     <div>{data.Exchange}:
                         <ul>DASH: {data.DASH_price}</ul>
                         <ul>ETH:  {data.ETH_price}</ul>
-                        <ul>LTC:  {data.LTC_price}</ul></div>
+                        <ul>LTC:  (data.LTC_price}</ul></div>
                 )}
 
             </div>
