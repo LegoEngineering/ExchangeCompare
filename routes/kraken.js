@@ -6,7 +6,7 @@ var Trade_update = require('../models/Trade_update.model');
 const kraken = require('./helpers/kraken_helper');
 const poloniex = require('./poloniex');
 const coincap = require('./coincap');
-/*
+
 async function kraken_call() {
     //var DASH_packet = (await kraken.ticker({pair: 'DASHXBT'}));
     var ETH_packet = (await kraken.ticker({pair: 'ETHXBT'}));
@@ -26,8 +26,8 @@ async function kraken_call() {
         }
     });
 };
-kraken_call();
-*/
+
+
 async function coincap_call(count) {
     var packet = (await coincap.ticker())
     var coinTrade_update = new Trade_update({
@@ -66,13 +66,13 @@ async function poloniex_call(count) {
 };
 
 function apicalls(count){
+    //kraken_call(count);
     coincap_call(count);
     poloniex_call(count);
     return 0;
 };
 
 var index = 0;
-
 setInterval(function(){apicalls(++index)},10000);
 
 

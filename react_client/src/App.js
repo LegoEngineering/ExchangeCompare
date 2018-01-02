@@ -6,7 +6,10 @@ import './App.css';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {data:[]};
+        this.state = {
+            data:[],
+            count:0
+        };
         this.interval = setInterval(this.updateDate, 5000);
 
     }
@@ -14,7 +17,6 @@ class App extends Component {
         fetch('/kraken')
             .then(res => res.json())
             .then(data => this.setState({ data }));
-            //.then(console.log(JSON.stringify(res)));
     }
 
     componentWillUnmount() {
@@ -25,14 +27,14 @@ class App extends Component {
             .then(res => res.json())
             .then(data => this.setState({ data }));
     }
+
     render() {
         return (
             <div className="App">
                 <h1>Exchange Data</h1>
-                {this.state.data.map(data =>
-                    <div key={data.id}>{data.Exchange}</div>
-
-                    //<div key={user.Exchange}>{user.ETH_price}</div>
+                <h4>Dash Price       ETH Price       LTC Price</h4>
+                {this.state.data.filter(({Index}) => Index === 5).map(data =>
+                    <div key={data.Index}>{data.Exchange}: {data.DASH_price} {data.ETH_price} {data.LTC_price}</div>
                 )}
             </div>
         );
