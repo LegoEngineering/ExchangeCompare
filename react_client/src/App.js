@@ -10,19 +10,19 @@ class App extends Component {
             data:[],
             count: 0
         };
-        this.interval = setInterval(this.updateDate, 7000);
+        this.interval = setInterval(this.updateDate, 10000);
 
     }
     componentDidMount() {
         fetch('/kraken')
             .then(res => res.json())
             .then(data => this.setState({data: data, count: this.state.count} ))
-
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
+
     updateDate= () => {
         fetch('/kraken')
             .then(res => res.json())
@@ -38,21 +38,36 @@ class App extends Component {
                 <ul>LTC:  {data.LTC_price}</ul></div>
         )};
 
-    render() {
-        /*var cake;
-        if (this.state.count>0){
-            cake ='frame'
-        } else{
-            cake = 'no frame'
-        }*/
+    bestExchange = () => {
+        var polo= [];
+        var coin = [];
+        const num = this.state.count;
+        var PoloData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(data =>
+            polo = data.DASH_price
+        )
+        var CoinData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(data =>
+            coin = data.DASH_price
+        )
+        if(polo >= coin){
+            return (polo);
+        } else {
+            return (coin);
+        }
+    }
+
+render() {
 
         return (
             <div className="App">
                 <h1>Exchange Data</h1>
                 <h1> {this.state.count} </h1>
                 <h4>Huey Duey Louie</h4>
-                {this.helper('Poloniex')}
-
+                <div>
+                    <div>yo  {this.bestExchange('DASH_price')}</div>
+                    <div>yo  {this.bestExchange('ETH_price')}</div>
+                    <div>yo  {this.bestExchange('LTC_price')}</div>
+                <div id="Polo">{this.helper('Poloniex')}</div> <div id="Coin">{this.helper('Coincap')}</div>
+                </div>
             </div>
         );
     }
