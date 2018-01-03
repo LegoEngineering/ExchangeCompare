@@ -8,9 +8,9 @@ class App extends Component {
         super(props);
         this.state = {
             data:[],
-            count: 0
+            count: -1
         };
-        this.interval = setInterval(this.updateDate, 10000);
+        this.interval = setInterval(this.updateDate, 15000);
 
     }
     componentDidMount() {
@@ -48,10 +48,13 @@ class App extends Component {
         var CoinData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(data =>
             coin = data.DASH_price
         )
+        var KraKData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(data =>
+            coin = data.DASH_price
+        )
         if(polo >= coin){
-            return (polo);
-        } else {
             return (coin);
+        } else {
+            return (polo);
         }
     }
 
@@ -66,7 +69,7 @@ render() {
                     <div>yo  {this.bestExchange('DASH_price')}</div>
                     <div>yo  {this.bestExchange('ETH_price')}</div>
                     <div>yo  {this.bestExchange('LTC_price')}</div>
-                <div id="Polo">{this.helper('Poloniex')}</div> <div id="Coin">{this.helper('Coincap')}</div>
+                <div id="Polo">{this.helper('Poloniex')}</div> <div id="Coin">{this.helper('Coincap')}</div> <div id="Krak">{this.helper('Kraken')}</div>
                 </div>
             </div>
         );

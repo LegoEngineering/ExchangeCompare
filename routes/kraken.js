@@ -7,22 +7,23 @@ const kraken = require('./helpers/kraken_helper');
 const poloniex = require('./poloniex');
 const coincap = require('./coincap');
 
-async function kraken_call() {
-    //var DASH_packet = (await kraken.ticker({pair: 'DASHXBT'}));
+async function kraken_call(count) {
+    var DASH_packet = (await kraken.ticker({pair: 'DASHXBT'}));
     var ETH_packet = (await kraken.ticker({pair: 'ETHXBT'}));
     //console.log(DASH_packet);
     var LTC_packet = (await kraken.ticker({pair: 'LTCXBT'}));
-    var newTrade_update = new Trade_update({
+    var krakTrade_update = new Trade_update({
         Exchange: 'Kraken',
-        //DASH_price: DASH_packet.result.DASHUSD.c[0],
+        Index: count,
+        DASH_price: DASH_packet.result.DASHXBT.c[0],
         ETH_price: ETH_packet.result.XETHXXBT.c[0],
         LTC_price: LTC_packet.result.XLTCXXBT.c[0]
     });
-    newTrade_update.save(function(err, Trade_update) {
+    krakTrade_update.save(function(err, Trade_update) {
         if(err) {
-            res.send('error saving Trade_update');
+            res.send('error saving Kraken Trade_update');
         } else {
-            console.log('Trade_update successfully saved.');
+            console.log('Kraken Trade_update successfully saved.');
         }
     });
 };
@@ -39,9 +40,9 @@ async function coincap_call(count) {
     });
     coinTrade_update.save(function(err, Trade_update) {
         if(err) {
-            res.send('error saving Trade_update');
+            res.send('error saving Coincap Trade_update');
         } else {
-            console.log('Trade_update successfully saved.');
+            console.log('Coincap Trade_update successfully saved.');
         }
     });
 };
@@ -58,28 +59,27 @@ async function poloniex_call(count) {
     });
     poloTrade_update.save(function(err, Trade_update) {
         if(err) {
-            res.send('error saving Trade_update');
+            res.send('error saving Poloniex Trade_update');
         } else {
-            console.log('Trade_update successfully saved.');
+            console.log('Poloniex Trade_update successfully saved.');
         }
     });
 };
 
 function apicalls(count){
-    //kraken_call(count);
+    kraken_call(count);
     coincap_call(count);
     poloniex_call(count);
     return 0;
 };
 
 var index = 0;
-setInterval(function(){apicalls(++index)},10000);
+setInterval(function(){apicalls(++index)},15000);
 
 
 router.get('/', function(req, res) {
     var query = mongoose.model('Trade_update').find({},function(err,Trade_update){
         //console.log(Trade_update);
-        //console.log('Trade_update');
         res.send(Trade_update);
 
     });
