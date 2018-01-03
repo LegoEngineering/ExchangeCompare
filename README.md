@@ -20,4 +20,4 @@ If including every exchange is a priority, then the refresh time simply needs to
 
 The system maintains no historical data except that collected after initialization. Future versions will use historical data combined with charts to increase appeal and potential advantages when projecting price.
 
-The two main files, outside of standards, here are App.js in the react_client and Kraken.js in the main folder
+The two main files, outside of standards, here are `App.js` in the react_client and `Kraken.js` in the main folder
