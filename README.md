@@ -4,8 +4,11 @@ A web app built with MERN stack to compare the rates of various cryptocurrency e
 Setup:
 
 1.Install MongoDB & run in CLI with "mongod" command
+
 2.Run `npm install` inside master folder
+
 3.Run `npm start`
+
 4.CD into react_client and repeat steps 2 & 3 
 
 The client should open automatically in your browser.
