@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 //connect to MongoDB
 var db = 'mongodb://localhost/exchange'
-mongoose.connect(db, {useMongoClient: true})
+mongoose.connect(db, function(){useMongoClient: true, mongoose.connection.db.dropDatabase();});
 console.log('MongoDB connection successful')
 
 var index = require('./routes/index');

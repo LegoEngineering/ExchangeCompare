@@ -8,8 +8,10 @@ class App extends Component {
         super(props);
         this.state = {
             data:[],
-            count: -1
+            count: 0
+
         };
+        var delay = setInterval(null, 10000);
         this.interval = setInterval(this.updateDate, 15000);
 
     }
@@ -32,7 +34,7 @@ class App extends Component {
     helper =(exName) =>{
         const num = this.state.count;
         return this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === exName).map(data =>
-            <div>{data.Exchange}:
+            <div><br/><br/>{data.Exchange}:
                 <ul>DASH: {data.DASH_price}</ul>
                 <ul>ETH:  {data.ETH_price}</ul>
                 <ul>LTC:  {data.LTC_price}</ul></div>
@@ -41,6 +43,7 @@ class App extends Component {
     bestExchange = () => {
         var polo= [];
         var coin = [];
+        var krak= [];
         const num = this.state.count;
         var PoloData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(data =>
             polo = data.DASH_price
@@ -49,26 +52,33 @@ class App extends Component {
             coin = data.DASH_price
         )
         var KraKData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(data =>
-            coin = data.DASH_price
+            krak = data.DASH_price
         )
-        if(polo >= coin){
-            return (coin);
+        if (krak >= 0 ){
+                return krak
         } else {
-            return (polo);
+            return 'pants';
         }
+        /*
+        if(polo >= coin){
+            return (krak);
+        } else {
+            return (krak);
+        }*/
     }
 
 render() {
 
         return (
             <div className="App">
-                <h1>Exchange Data</h1>
+                <h1>Exchange Data</h1><br/>
                 <h1> {this.state.count} </h1>
-                <h4>Huey Duey Louie</h4>
+                <h4>Compare Pricing Data from Your Favorite Exchanges!</h4><br/>
                 <div>
-                    <div>yo  {this.bestExchange('DASH_price')}</div>
-                    <div>yo  {this.bestExchange('ETH_price')}</div>
-                    <div>yo  {this.bestExchange('LTC_price')}</div>
+
+                    <div>Huey  {this.bestExchange('ETH_price')}</div>
+                    <div>Dewey  {this.bestExchange('DASH_price')}</div>
+                    <div>Louie  {this.bestExchange('LTC_price')}</div>
                 <div id="Polo">{this.helper('Poloniex')}</div> <div id="Coin">{this.helper('Coincap')}</div> <div id="Krak">{this.helper('Kraken')}</div>
                 </div>
             </div>
