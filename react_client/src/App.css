@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  text-align: left;
+  margin-left: 110px;
 }
 
 .App-logo {
@@ -20,6 +21,10 @@
 
 .App-intro {
   font-size: large;
+}
+
+body {
+  background-image: url('money.jpg');
 }
 
 @keyframes App-logo-spin {

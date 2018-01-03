@@ -7,80 +7,112 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[],
+            data: [],
             count: 0
 
         };
         var delay = setInterval(null, 10000);
-        this.interval = setInterval(this.updateDate, 15000);
+        this.interval = setInterval(this.updateDate, 20000);
 
     }
+
     componentDidMount() {
         fetch('/kraken')
             .then(res => res.json())
-            .then(data => this.setState({data: data, count: this.state.count} ))
+            .then(data => this.setState({data: data, count: this.state.count}))
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
     }
 
-    updateDate= () => {
+    updateDate = () => {
         fetch('/kraken')
             .then(res => res.json())
-            .then(data => this.setState({data: data, count: this.state.count+1} ))
+            .then(data => this.setState({data: data, count: this.state.count + 1}))
     }
 
-    helper =(exName) =>{
+    helper = (exName) => {
         const num = this.state.count;
         return this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === exName).map(data =>
             <div><br/><br/>{data.Exchange}:
                 <ul>DASH: {data.DASH_price}</ul>
-                <ul>ETH:  {data.ETH_price}</ul>
-                <ul>LTC:  {data.LTC_price}</ul></div>
-        )};
+                <ul>ETH: {data.ETH_price}</ul>
+                <ul>LTC: {data.LTC_price}</ul>
+            </div>
+        )
+    };
 
-    bestExchange = () => {
-        var polo= [];
+    bestExchange = (currency) => {
+        var polo = [];
         var coin = [];
-        var krak= [];
+        var krak = [];
         const num = this.state.count;
-        var PoloData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(data =>
-            polo = data.DASH_price
-        )
-        var CoinData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(data =>
-            coin = data.DASH_price
-        )
-        var KraKData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(data =>
-            krak = data.DASH_price
-        )
-        if (krak >= 0 ){
-                return krak
-        } else {
-            return 'pants';
+        var PoloData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(function(data) {
+            polo[0] = data.DASH_price;
+            polo[1] = data.ETH_price;
+            polo[2] = data.LTC_price;
+        })
+        var CoinData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(function(data) {
+            coin[0] = data.DASH_price;
+            coin[1] = data.ETH_price;
+            coin[2] = data.LTC_price;
+        })
+        var KraKData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(function(data) {
+            polo[0] = data.DASH_price;
+            krak[1] = data.ETH_price;
+            krak[2] = data.LTC_price;
+        })
+
+        var dash_prices=[polo[0],coin[0],krak[0]];
+        var eth_prices=[polo[1],coin[1],krak[1]];
+        var ltc_prices=[polo[2],coin[2],krak[2]];
+        if (currency === 'DASH') {
+            if (polo[0] == Math.min.apply(null, dash_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Poloniex'
+            } else if(coin[0] == Math.min.apply(null, dash_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Coincap'
+            } else if(krak[0] == Math.min.apply(null, dash_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Kraken'
+            } else {
+            return 'unknown'
+            }
         }
-        /*
-        if(polo >= coin){
-            return (krak);
-        } else {
-            return (krak);
-        }*/
+        if (currency === 'ETH') {
+            if (polo[1] == Math.min.apply(null, eth_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Poloniex'
+            } else if(coin[1] == Math.min.apply(null, eth_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Coincap'
+            } else if(krak[1] == Math.min.apply(null, eth_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Kraken'
+            } else {
+                return 'unknown'
+            }
+        }
+        if (currency === 'LTC') {
+            if (polo[2] == Math.min.apply(null, ltc_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Poloniex'
+            } else if(coin[2] == Math.min.apply(null, ltc_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Coincap'
+            } else if(krak[2] == Math.min.apply(null, ltc_prices.filter(function(n) { return !isNaN(n); }))){
+                return 'Kraken'
+            } else {
+                return 'unknown'
+            }
+        }
     }
 
 render() {
 
         return (
             <div className="App">
-                <h1>Exchange Data</h1><br/>
-                <h1> {this.state.count} </h1>
+                <h1>Exchange Data</h1>
                 <h4>Compare Pricing Data from Your Favorite Exchanges!</h4><br/>
-                <div>
-
-                    <div>Huey  {this.bestExchange('ETH_price')}</div>
-                    <div>Dewey  {this.bestExchange('DASH_price')}</div>
-                    <div>Louie  {this.bestExchange('LTC_price')}</div>
+                    <div>Huey should use  {this.bestExchange('DASH')} for Dash</div>
+                    <div>Dewey should use {this.bestExchange('ETH')} for Ether</div>
+                    <div>Louie should use  {this.bestExchange('LTC')} for Litecoin</div>
                 <div id="Polo">{this.helper('Poloniex')}</div> <div id="Coin">{this.helper('Coincap')}</div> <div id="Krak">{this.helper('Kraken')}</div>
-                </div>
+                <h6>Update #{this.state.count} </h6>
             </div>
         );
     }
