@@ -9,11 +9,9 @@ class App extends Component {
         this.state = {
             data: [],
             count: 0
-
         };
         var delay = setInterval(null, 10000);
-        this.interval = setInterval(this.updateDate, 20000);
-
+        this.interval = setInterval(this.updateDate, 30000);
     }
 
     componentDidMount() {
@@ -36,9 +34,9 @@ class App extends Component {
         const num = this.state.count;
         return this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === exName).map(data =>
             <div><br/><br/>{data.Exchange}:
-                <ul>DASH: {data.DASH_price}</ul>
-                <ul>ETH: {data.ETH_price}</ul>
-                <ul>LTC: {data.LTC_price}</ul>
+                <ul>DASH: {data.DASH_price} BTC</ul>
+                <ul>ETH: {data.ETH_price} BTC</ul>
+                <ul>LTC: {data.LTC_price} BTC</ul>
             </div>
         )
     };
@@ -48,17 +46,17 @@ class App extends Component {
         var coin = [];
         var krak = [];
         const num = this.state.count;
-        var PoloData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(function(data) {
+        this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Poloniex').map(function(data) {
             polo[0] = data.DASH_price;
             polo[1] = data.ETH_price;
             polo[2] = data.LTC_price;
         })
-        var CoinData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(function(data) {
+        this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Coincap').map(function(data) {
             coin[0] = data.DASH_price;
             coin[1] = data.ETH_price;
             coin[2] = data.LTC_price;
         })
-        var KraKData = this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(function(data) {
+        this.state.data.filter(({Index}) => Index === num).filter(({Exchange}) => Exchange === 'Kraken').map(function(data) {
             polo[0] = data.DASH_price;
             krak[1] = data.ETH_price;
             krak[2] = data.LTC_price;

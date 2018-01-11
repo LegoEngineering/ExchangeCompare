@@ -74,7 +74,7 @@ function apicalls(count){
 };
 
 var index = 0;
-setInterval(function(){apicalls(++index)},20000);
+setInterval(function(){apicalls(++index)},30000);
 
 
 router.get('/', function(req, res) {
